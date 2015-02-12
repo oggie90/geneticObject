@@ -32,6 +32,36 @@ bitset<million> generateRandomGene()
 	}
 	return newGene;
 }
+/*
+functions
+
+flip
+add 1 - ie first index = true
+bit shift right
+bit shift left
+
+*/
+
+void flip()
+{
+	
+}
+
+void addOne()
+{
+
+}
+
+void bitShiftRight()
+{
+
+}
+
+void bitShiftLeft()
+{
+
+}
+
 
 /*
 	see which one gets closer to the number 123456789
@@ -54,6 +84,10 @@ void main()
 	for (int i = 0; i < 20; i++)
 	{
 		genePool.push_back(GeneticObject(halfmillion, generateRandomGene()));
+		genePool[i].addBehaviour(flip);
+		genePool[i].addBehaviour(addOne);
+		genePool[i].addBehaviour(bitShiftRight);
+		genePool[i].addBehaviour(bitShiftLeft);
 	}
 
 

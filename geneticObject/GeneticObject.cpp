@@ -1,21 +1,31 @@
 #include "GeneticObject.h"
 
-behaviourFunction function1()
-{
 
-}
+/*
+	functions
+
+	flip
+	add 1 - ie first index = true
+	bit shift right
+	bit shift left
+
+*/
 
 
 
 GeneticObject::GeneticObject() // do not use this constructor please
 {
 	srand(time(NULL));
+
+	// add functions
 }
 
 GeneticObject::GeneticObject(int bitsetSize, bitset<million> gene)
 {
 	srand(time(NULL));
 	this->geneSize = bitsetSize;
+
+	// add functions
 }
 
 bitset<million> GeneticObject::run(bitset<million> input)
