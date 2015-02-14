@@ -11,19 +11,16 @@
 
 */
 
-
-
 GeneticObject::GeneticObject() // do not use this constructor please
 {
-	srand(time(NULL));
 
 	// add functions
 }
 
 GeneticObject::GeneticObject(int bitsetSize, bitset<million> gene)
 {
-	srand(time(NULL));
 	this->geneSize = bitsetSize;
+	this->gene = gene;
 
 	// add functions
 }
@@ -32,21 +29,32 @@ bitset<million> GeneticObject::run(bitset<million> input)
 {
 	bitset<million> behaviourSequence = this->createBehaviourSequence(input);
 
-	int behaviourBitSectionLength = (int)(log2(this->functionList.size()) + 1.0f);
+	int behaviourBitSectionLength = (int)(log2(this->functionList.size())+1.0f);
 
 	int iterator = 0;
 	int behaviour = 0;
 	for (int i = 0; i < behaviourSequence.size(); i++)
 	{
-		iterator++;
 		if (behaviourSequence[i])
 		{
-			behaviour += 1 << iterator;
+			behaviour += 1 << (iterator -1);
 		}
 		if (iterator >= behaviourBitSectionLength)
 		{
-			this->functionList[behaviour]();
+			if (behaviour > this->functionList.size()-1 || behaviour < 0)
+			{
+				int x = 0;
+			}
+			else
+			{
+				if (behaviour == 4)
+					int x = 0;
+				this->functionList[behaviour](*this);
+			}
+			behaviour = 0;
+			iterator = 0;
 		}
+		iterator++;
 	}
 
 	return this->returnBitSet;
@@ -67,17 +75,19 @@ bitset<million> GeneticObject::createBehaviourSequence(bitset<million> input)
 	int inputIndex = 0;
 
 	int tripletValue = 0;
+	int tripletIndex = 0;
 	// run through gene
-	for (int i = 0; i < geneSize-1; i++)
+	for (int i = 0; i < geneSize - 1; i++, tripletIndex++)
 	{
 		if (gene[i])
 		{
-			tripletValue += (1 << i);
+			tripletValue += (1 << tripletIndex);
 		}
 
 		if (i % 3 == 0)
 		{
 			i++;
+			tripletIndex = 0;
 			switch (tripletValue)
 			{
 			case 0: 
@@ -143,15 +153,21 @@ GeneticObject GeneticObject::breed(bitset<million> input)
 {
 	bitset<million> newGene = this->gene;
 	int i = 0;
-	if (rand() % 1 == 1)
+	int halfGeneSize = this->geneSize / 2;
+
+	if (rand() % 2 == 1)
 	{
 		// set start point to mid
 		i = (int)(this->geneSize / 2);
 	}
-
-	for (i; i < i + (int)(this->geneSize/2); i++)
+	int startIndex = i;
+	for (i; i < (startIndex + halfGeneSize); i++)
 	{
 		newGene[i] = input[i];
+		if (rand() % 1000 > 998)
+		{
+			newGene[i].flip();
+		}
 	}
 
 	return GeneticObject(this->geneSize, newGene);

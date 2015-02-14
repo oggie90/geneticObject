@@ -7,15 +7,14 @@
 #include <time.h>
 #include <math.h>
 
-#define million 1000000
-
-typedef void (*behaviourFunction)();
+#define million 10000
+class GeneticObject;
+typedef void (*behaviourFunction)(GeneticObject &object);
 
 using namespace std;
 
 class GeneticObject
 {
-
 
 public:
 	GeneticObject();
@@ -35,10 +34,11 @@ public:
 		return this->gene;
 	}
 
+	bitset<million> returnBitSet;
+
 private:
 	int geneSize = 0;
 	bitset<million> gene; // giant bit size hurray for breaking the stack :D
-	bitset<million> returnBitSet;
 	vector<behaviourFunction> functionList;
 
 	bitset<million> createBehaviourSequence(bitset<million> input);
