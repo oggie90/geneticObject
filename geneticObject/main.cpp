@@ -1,8 +1,11 @@
 #include "GeneticObject.h"
 #include <iostream>
+#include <ctime>
 #define halfmillion million/2
 
-#define matchingNumber 123456789
+
+
+#define matchingNumber 1
 #define genepoolsize 20;
 
 
@@ -107,9 +110,11 @@ void main()
 		genePool[i].addBehaviour(bitShiftLeft);
 	}
 	int x = 1;
-	while (x != 0)
+	int distance = -999;
+	clock_t startTime = clock();
+	cout << "start time: " << clock() << endl;
+	while (distance != 0)
 	{
-
 		// run each and get fitness
 		for (int i = 0; i < genePool.size(); i++)
 		{
@@ -131,20 +136,25 @@ void main()
 				}
 			}
 		}
+		distance = genePool[0].fitness;
 		// debug write fitness values
 		
-		
+		cout << x << " - " << genePool[0].fitness << endl;
+
+		/*
 		cout << "-----------\n" << "FITNESS VALUES\n" << "-----------\n";
+		
 		for (int i = genePool.size()-1; i >= 0; i--)
 		{
 			cout << genePool[i].fitness << "\n";
 		}
 		
-		
+		*/
+
 		// breed according to fitness
 
 		vector<GeneticObject> buffer;
-		int breedLimit = 25;
+		int breedLimit = 700;
 		for (int i = 0; i < genePool.size(); i++)
 		{
 			for (int j = 0; j < genePool.size() && breedLimit >= 0; j++)
@@ -164,7 +174,20 @@ void main()
 			genePool[i].addBehaviour(bitShiftLeft);
 		}
 
-		x = 999;
+		x++;
+		if (distance < 5)
+		{
+			cout << "-----\nTime Difference: " << clock() - startTime << "\n-------" << endl;
+			distance = -999;
+			for (int i = 0; i < million; i++)
+			{
+				if (rand() & 1 == 1)
+				{
+					stimulusInput[i] = true;
+				}
+			}
+		}
+
 	}
 	
 

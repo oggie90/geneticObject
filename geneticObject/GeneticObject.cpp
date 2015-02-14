@@ -164,7 +164,7 @@ GeneticObject GeneticObject::breed(bitset<million> input)
 	for (i; i < (startIndex + halfGeneSize); i++)
 	{
 		newGene[i] = input[i];
-		if (rand() % 1000 > 998)
+		if (rand() % 1000 > 993)
 		{
 			newGene[i].flip();
 		}
